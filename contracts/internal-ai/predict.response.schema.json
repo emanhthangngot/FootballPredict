@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://footballpredict.local/contracts/internal-ai/predict.response.schema.json",
+  "title": "Internal AI Prediction Response",
+  "type": "object",
+  "required": [
+    "matchId",
+    "fixtureVersion",
+    "featureMaterializationId",
+    "featureSnapshotHash",
+    "featureSnapshotTimestamp",
+    "modelVersion",
+    "trainingDataCutoffDate",
+    "homeWinProbability",
+    "drawProbability",
+    "awayWinProbability",
+    "scoreMatrix",
+    "featureBreakdown",
+    "insightText"
+  ],
+  "properties": {
+    "matchId": { "type": "integer" },
+    "fixtureVersion": { "type": "string" },
+    "featureMaterializationId": { "type": "string" },
+    "featureSnapshotHash": { "type": "string" },
+    "featureSnapshotTimestamp": { "type": "string", "format": "date-time" },
+    "modelVersion": { "type": "string" },
+    "trainingDataCutoffDate": { "type": "string", "format": "date" },
+    "homeWinProbability": { "type": "number", "minimum": 0, "maximum": 1 },
+    "drawProbability": { "type": "number", "minimum": 0, "maximum": 1 },
+    "awayWinProbability": { "type": "number", "minimum": 0, "maximum": 1 },
+    "scoreMatrix": {
+      "type": "object",
+      "required": ["maxGoalsPerTeam", "tailHandling", "cells"],
+      "properties": {
+        "maxGoalsPerTeam": { "type": "integer" },
+        "tailHandling": { "type": "string" },
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["homeGoals", "awayGoals", "probability"],
+            "properties": {
+              "homeGoals": { "type": "integer" },
+              "awayGoals": { "type": "integer" },
+              "probability": { "type": "number", "minimum": 0, "maximum": 1 }
+            }
+          }
+        }
+      }
+    },
+    "featureBreakdown": {
+      "type": "object",
+      "required": ["method", "modelVersion", "target", "topFeatures", "maxFeatures"],
+      "properties": {
+        "method": { "type": "string" },
+        "modelVersion": { "type": "string" },
+        "target": { "type": "string" },
+        "topFeatures": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["featureName", "displayName", "value", "impact", "direction", "rank", "group"],
+            "properties": {
+              "featureName": { "type": "string" },
+              "displayName": { "type": "string" },
+              "value": { "type": "number" },
+              "impact": { "type": "number" },
+              "direction": { "type": "string" },
+              "rank": { "type": "integer" },
+              "group": { "type": "string" }
+            }
+          }
+        },
+        "maxFeatures": { "type": "integer" }
+      }
+    },
+    "insightText": { "type": ["string", "null"] }
+  },
+  "additionalProperties": false
+}

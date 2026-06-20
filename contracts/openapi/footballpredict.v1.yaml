@@ -1,0 +1,271 @@
+openapi: 3.1.0
+info:
+  title: FootballPredict Public API
+  version: 0.1.0
+  description: Analytics API for football prediction explanations and probabilities.
+paths:
+  /api/v1/matches/{matchId}/full:
+    get:
+      summary: Returns the full analytics view for a match.
+      operationId: getFullMatch
+      parameters:
+        - name: matchId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: Full match analytics response.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FullMatchResponse"
+        "503":
+          description: Prediction temporarily unavailable.
+          content:
+            application/problem+json:
+              schema:
+                $ref: "#/components/schemas/ProblemDetails"
+components:
+  schemas:
+    FullMatchResponse:
+      type: object
+      required:
+        - fixture
+        - prediction
+        - marketComparison
+        - edgeTimeline
+        - scoreHeatmap
+        - totalGoalsDistribution
+        - btts
+        - featureBreakdown
+        - warnings
+        - metadata
+      properties:
+        fixture:
+          $ref: "#/components/schemas/FixtureSummary"
+        prediction:
+          $ref: "#/components/schemas/PredictionSummary"
+        marketComparison:
+          $ref: "#/components/schemas/MarketComparison"
+        edgeTimeline:
+          type: array
+          items:
+            $ref: "#/components/schemas/EdgeTimelinePoint"
+        scoreHeatmap:
+          $ref: "#/components/schemas/ScoreMatrix"
+        totalGoalsDistribution:
+          type: array
+          items:
+            $ref: "#/components/schemas/TotalGoalsBucket"
+        btts:
+          $ref: "#/components/schemas/BttsSummary"
+        featureBreakdown:
+          $ref: "#/components/schemas/FeatureBreakdown"
+        aiExplanation:
+          type: string
+          nullable: true
+        warnings:
+          type: array
+          items:
+            type: string
+        metadata:
+          $ref: "#/components/schemas/PredictionMetadata"
+    FixtureSummary:
+      type: object
+      required: [matchId, fixtureVersion, homeTeam, awayTeam, kickoffTime]
+      properties:
+        matchId:
+          type: integer
+          format: int64
+        fixtureVersion:
+          type: string
+        homeTeam:
+          type: string
+        awayTeam:
+          type: string
+        kickoffTime:
+          type: string
+          format: date-time
+    PredictionSummary:
+      type: object
+      required:
+        - homeWinProbability
+        - drawProbability
+        - awayWinProbability
+        - confidence
+        - scoreDistributionUnavailable
+        - insightUnavailable
+      properties:
+        homeWinProbability:
+          type: number
+          minimum: 0
+          maximum: 1
+        drawProbability:
+          type: number
+          minimum: 0
+          maximum: 1
+        awayWinProbability:
+          type: number
+          minimum: 0
+          maximum: 1
+        confidence:
+          type: string
+        scoreDistributionUnavailable:
+          type: boolean
+        insightUnavailable:
+          type: boolean
+    MarketComparison:
+      type: object
+      required: [edgeReliable]
+      properties:
+        homeEdge:
+          type: number
+          nullable: true
+        drawEdge:
+          type: number
+          nullable: true
+        awayEdge:
+          type: number
+          nullable: true
+        edgeReliable:
+          type: boolean
+    EdgeTimelinePoint:
+      type: object
+      required: [checkpoint, snapshotAt]
+      properties:
+        checkpoint:
+          type: string
+        homeEdge:
+          type: number
+          nullable: true
+        drawEdge:
+          type: number
+          nullable: true
+        awayEdge:
+          type: number
+          nullable: true
+        snapshotAt:
+          type: string
+          format: date-time
+    ScoreMatrix:
+      type: object
+      nullable: true
+      required: [maxGoalsPerTeam, tailHandling, cells]
+      properties:
+        maxGoalsPerTeam:
+          type: integer
+        tailHandling:
+          type: string
+        cells:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScoreMatrixCell"
+    ScoreMatrixCell:
+      type: object
+      required: [homeGoals, awayGoals, probability]
+      properties:
+        homeGoals:
+          type: integer
+        awayGoals:
+          type: integer
+        probability:
+          type: number
+          minimum: 0
+          maximum: 1
+    TotalGoalsBucket:
+      type: object
+      required: [label, probability]
+      properties:
+        label:
+          type: string
+        probability:
+          type: number
+          minimum: 0
+          maximum: 1
+    BttsSummary:
+      type: object
+      nullable: true
+      required: [probability, confidence]
+      properties:
+        probability:
+          type: number
+          minimum: 0
+          maximum: 1
+        confidence:
+          type: string
+    FeatureBreakdown:
+      type: object
+      nullable: true
+      required: [method, modelVersion, target, topFeatures, maxFeatures]
+      properties:
+        method:
+          type: string
+        modelVersion:
+          type: string
+        target:
+          type: string
+        topFeatures:
+          type: array
+          items:
+            $ref: "#/components/schemas/FeatureContribution"
+        maxFeatures:
+          type: integer
+    FeatureContribution:
+      type: object
+      required: [featureName, displayName, value, impact, direction, rank, group]
+      properties:
+        featureName:
+          type: string
+        displayName:
+          type: string
+        value:
+          type: number
+        impact:
+          type: number
+        direction:
+          type: string
+        rank:
+          type: integer
+        group:
+          type: string
+    PredictionMetadata:
+      type: object
+      required:
+        - modelVersion
+        - featureMaterializationId
+        - featureSnapshotHash
+        - featureSnapshotTimestamp
+        - trainingDataCutoffDate
+        - servedAt
+      properties:
+        modelVersion:
+          type: string
+        featureMaterializationId:
+          type: string
+        featureSnapshotHash:
+          type: string
+        featureSnapshotTimestamp:
+          type: string
+          format: date-time
+        trainingDataCutoffDate:
+          type: string
+          format: date
+        servedAt:
+          type: string
+          format: date-time
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+        instance:
+          type: string

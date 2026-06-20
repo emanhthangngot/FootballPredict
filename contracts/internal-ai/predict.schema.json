@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://footballpredict.local/contracts/internal-ai/predict.schema.json",
+  "title": "Internal AI Prediction Contract",
+  "type": "object",
+  "required": [
+    "matchId",
+    "fixtureVersion",
+    "featureMaterializationId",
+    "featureSnapshotHash",
+    "featureSnapshotTimestamp",
+    "modelTask"
+  ],
+  "properties": {
+    "matchId": { "type": "integer" },
+    "fixtureVersion": { "type": "string" },
+    "featureMaterializationId": { "type": "string" },
+    "featureSnapshotHash": { "type": "string" },
+    "featureSnapshotTimestamp": { "type": "string", "format": "date-time" },
+    "modelTask": { "type": "string", "enum": ["fullPrediction"] }
+  },
+  "additionalProperties": false
+}

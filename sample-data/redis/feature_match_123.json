@@ -1,0 +1,15 @@
+{
+  "redisKey": "feature:match:123:featmat-2026-06-20-1200",
+  "value": {
+    "matchId": 123,
+    "fixtureVersion": "fixture-2026-06-20T12:00:00Z",
+    "featureMaterializationId": "featmat-2026-06-20-1200",
+    "featureSnapshotHash": "sha256:test",
+    "featureSnapshotTimestamp": "2026-06-20T12:00:00Z",
+    "features": {
+      "homeEloDiff": 72.4,
+      "awayRestDays": 3,
+      "homeRecentXg": 1.62
+    }
+  }
+}
