@@ -1,0 +1,64 @@
+name: Supabase Migration Dry Run
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - master
+    paths:
+      - "supabase/**"
+      - ".github/workflows/supabase-migration.yml"
+  push:
+    branches:
+      - dev
+      - master
+    paths:
+      - "supabase/**"
+      - ".github/workflows/supabase-migration.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  supabase-migration-dry-run:
+    name: supabase-migration-dry-run
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_DB: footballpredict_ci
+          POSTGRES_USER: postgres
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install PostgreSQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y postgresql-client
+
+      - name: Prepare Supabase compatibility shim
+        run: |
+          psql -h localhost -U postgres -d footballpredict_ci <<'SQL'
+          CREATE ROLE authenticated;
+          CREATE SCHEMA IF NOT EXISTS auth;
+          CREATE OR REPLACE FUNCTION auth.uid()
+          RETURNS uuid
+          LANGUAGE sql
+          STABLE
+          AS $$
+              SELECT NULL::uuid;
+          $$;
+          SQL
+
+      - name: Apply foundation migration
+        run: psql -h localhost -U postgres -d footballpredict_ci -v ON_ERROR_STOP=1 -f supabase/migrations/001_architecture_foundation.sql
