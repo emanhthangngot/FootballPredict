@@ -1,0 +1,39 @@
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  ai_engine:
+    image: python:3.11-slim
+    working_dir: /app
+    volumes:
+      - ./ai_engine:/app
+    command: sh -c "pip install -e . && uvicorn app.main:app --host 0.0.0.0 --port 8001"
+    ports:
+      - "8001:8001"
+
+  backend:
+    image: mcr.microsoft.com/dotnet/sdk:8.0
+    working_dir: /src/backend/FootballPredictor.Api
+    volumes:
+      - .:/src
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    command: dotnet run --urls http://0.0.0.0:8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - ai_engine
+      - redis
+
+  airflow:
+    image: apache/airflow:2.10.5
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    volumes:
+      - ./etl/dags:/opt/airflow/dags
+    command: standalone
+    ports:
+      - "8081:8080"
