@@ -39,6 +39,7 @@ Python ETL / Feature Engineering / Snapshot / Training Jobs
 
 | File | Purpose |
 |---|---|
+| `../ARCHITECTURE_FOUNDATION_PLAN.md` | Khung điều phối để hoàn thiện architecture ban đầu trước implementation |
 | `00_MASTER_PRODUCT_TDD_SDD.md` | File chung: product plan + TDD + SDD + implementation rules |
 | `01_PROJECT_OVERVIEW.md` | Tổng quan sản phẩm, scope, persona |
 | `02_SYSTEM_ARCHITECTURE.md` | Runtime architecture, boundaries, deployment |

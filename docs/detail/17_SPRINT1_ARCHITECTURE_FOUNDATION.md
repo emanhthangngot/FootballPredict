@@ -17,6 +17,12 @@ Mobile shell running
 OpenAPI v1 draft
 ```
 
+Current implementation entry point:
+
+```text
+docs/ARCHITECTURE_FOUNDATION_PLAN.md
+```
+
 ## 2. Backend Tasks
 
 | Task | DoD |
