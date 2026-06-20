@@ -1,3 +1,10 @@
-.codex/
+.codex/*
+!.codex/constitution.md
 AGENTS.md
 SECURITY.md
+
+__pycache__/
+.pytest_cache/
+.venv/
+ai_engine/.venv/
+ai_engine/.pytest_cache/
