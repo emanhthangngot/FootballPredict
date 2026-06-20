@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Shell
+    x:Class="FootballPredictor.Mobile.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:user="clr-namespace:FootballPredictor.Mobile.Views.User"
+    Shell.BackgroundColor="{StaticResource PageBackground}"
+    Shell.ForegroundColor="{StaticResource TextPrimary}"
+    Shell.TabBarBackgroundColor="{StaticResource PanelBackground}"
+    Shell.TabBarForegroundColor="{StaticResource AccentBlue}"
+    Shell.TabBarUnselectedColor="{StaticResource TextMuted}">
+    <TabBar>
+        <ShellContent
+            Title="Trang chủ"
+            ContentTemplate="{DataTemplate user:HomePage}"
+            Route="home" />
+        <ShellContent
+            Title="Chi tiết"
+            ContentTemplate="{DataTemplate user:MatchDetailPage}"
+            Route="match-detail" />
+    </TabBar>
+</Shell>

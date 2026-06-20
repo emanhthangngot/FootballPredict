@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="FootballPredictor.Mobile.Views.User.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewModels="clr-namespace:FootballPredictor.Mobile.ViewModels"
+    x:DataType="viewModels:HomeViewModel"
+    BackgroundColor="{StaticResource PageBackground}">
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="18">
+            <Label
+                Text="Analytics Hub"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="{StaticResource TextPrimary}" />
+            <Border BackgroundColor="{StaticResource PanelBackground}" StrokeThickness="0" Padding="16">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Backend readiness" TextColor="{StaticResource TextMuted}" />
+                    <Label Text="{Binding BackendStatus}" TextColor="{StaticResource AccentBlue}" FontAttributes="Bold" />
+                </VerticalStackLayout>
+            </Border>
+            <Border BackgroundColor="{StaticResource PanelBackground}" StrokeThickness="0" Padding="16">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Featured match" TextColor="{StaticResource TextMuted}" />
+                    <Label Text="{Binding FeaturedMatch}" TextColor="{StaticResource TextPrimary}" FontSize="20" FontAttributes="Bold" />
+                    <Label Text="{Binding PrimaryPrediction}" TextColor="{StaticResource AccentBlue}" />
+                </VerticalStackLayout>
+            </Border>
+            <Button
+                Text="Refresh"
+                Command="{Binding RefreshCommand}"
+                BackgroundColor="{StaticResource AccentBlue}"
+                TextColor="#00111F" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
