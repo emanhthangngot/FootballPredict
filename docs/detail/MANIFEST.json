@@ -1,0 +1,30 @@
+{
+  "created_at": "2026-06-18T08:22:29.936691Z",
+  "folder": "/mnt/data/football_predictor_supabase_docs_v2",
+  "updated_original": "/mnt/data/football_predictor_final_lightweight_mobile_production_plan.md",
+  "files": [
+    "00_MASTER_PRODUCT_TDD_SDD.md",
+    "01_PROJECT_OVERVIEW.md",
+    "02_SYSTEM_ARCHITECTURE.md",
+    "03_DATA_PIPELINE_AND_SCHEMA.md",
+    "04_BACKEND_ARCHITECTURE.md",
+    "05_AI_MODELS_STRATEGY.md",
+    "06_API_SYSTEM_DESIGN.md",
+    "07_CLIENT_UI_UX_ARCHITECTURE.md",
+    "08_AI_EXPLANATION_AND_RAG_DESIGN.md",
+    "09_MONITORING_AND_MODEL_MAINTENANCE.md",
+    "10_SPRINT_PLANNING.md",
+    "11_ETHICS_AND_RESPONSIBLE_AI.md",
+    "12_PROJECT_MANAGEMENT.md",
+    "13_DEVELOPMENT_INFRASTRUCTURE.md",
+    "14_GIT_WORKFLOW_AND_RULES.md",
+    "15_SUPABASE_SCHEMA_DESIGN.md",
+    "16_THREE_PERSON_DELIVERY_PLAN.md",
+    "17_SPRINT1_ARCHITECTURE_FOUNDATION.md",
+    "18_UNIFIED_PRODUCT_UPGRADE_PLAN.md",
+    "README_DOCS_INDEX.md"
+  ],
+  "assets": [
+    "mobile_ui_reference.png"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Gridiron Analytics",
+  "description": "GRIDIRON - Premium Football Match Predictor with decoupled User App (Pre-match context, injury tracking, AI Analyst RAG Q&A) and Admin MLOps Lab (Model validation, calibration curves, Feast feature store, MLflow registry, backtesting simulation).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
