@@ -3,8 +3,8 @@
 ## 1. Branch Strategy
 
 ```text
-main
-develop
+master
+dev
 feature/<area>/<task-name>
 hotfix/<short-name>
 ```
@@ -23,9 +23,9 @@ feature/docs/tdd-sdd-baseline
 
 | Source | Target | Strategy |
 |---|---|---|
-| feature/* | develop | Squash merge |
-| develop | main | Merge commit |
-| hotfix/* | main + develop | PR required |
+| feature/* | dev | Squash merge |
+| dev | master | Merge commit |
+| hotfix/* | master + dev | PR required |
 
 ## 3. Commit Convention
 
@@ -51,7 +51,7 @@ No direct mobile table access
 
 ## 5. Protected Branches
 
-`main` and `develop` should require:
+`master` and `dev` should require:
 
 ```text
 Pull request
@@ -59,3 +59,5 @@ At least 1 reviewer
 CI pass
 No direct push
 ```
+
+Required CI checks are listed in `docs/ci/branch-protection.md`.
