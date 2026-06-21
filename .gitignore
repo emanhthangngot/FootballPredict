@@ -1,5 +1,6 @@
 .codex/*
 !.codex/constitution.md
+!.codex/README.md
 AGENTS.md
 SECURITY.md
 
